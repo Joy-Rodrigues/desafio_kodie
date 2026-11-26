@@ -1,0 +1,27 @@
+[
+  {
+    "cliente": "Ana Souza",
+    "canal": "email",
+    "mensagem": "Fui cobrada duas vezes na fatura deste mês e ninguém me responde. Isso é um absurdo, preciso do estorno urgente!"
+  },
+  {
+    "cliente": "Carlos Lima",
+    "canal": "whatsapp",
+    "mensagem": "Boa tarde, qual é o prazo de entrega do meu pedido 4821? Ainda não recebi o código de rastreio."
+  },
+  {
+    "cliente": "Marina Alves",
+    "canal": "site",
+    "mensagem": "Não consigo fazer login no sistema, aparece erro de senha mesmo depois de redefinir."
+  },
+  {
+    "cliente": "Paulo Reis",
+    "canal": "email",
+    "mensagem": "Gostaria de um orçamento para contratar o plano empresarial para 15 usuários."
+  },
+  {
+    "cliente": "Julia Rocha",
+    "canal": "instagram",
+    "mensagem": "Quero agradecer a equipe, o atendimento foi excelente e resolveram meu problema rapidinho!"
+  }
+]

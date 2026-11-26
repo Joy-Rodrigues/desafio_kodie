@@ -1,0 +1,470 @@
+{
+  "name": "Classificador de Mensagens - KODIE",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "mensagens",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "1490761f-5bd9-5d62-bbca-0212d26438b2",
+      "name": "Webhook - Recebe mensagem",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        300
+      ],
+      "webhookId": "19e567ae-40f6-506d-bf22-84888ce1930b"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ec631397-396b-56a4-a560-1568a50ac7d6",
+              "name": "mensagem",
+              "value": "={{ $json.body.mensagem }}",
+              "type": "string"
+            },
+            {
+              "id": "d21c75ee-1204-57d3-a57e-23eee462fe7b",
+              "name": "cliente",
+              "value": "={{ $json.body.cliente || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "53013ea3-7b88-5272-b536-c1773060b692",
+              "name": "canal",
+              "value": "={{ $json.body.canal || 'webhook' }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e431ae63-2838-563f-9bca-95806df6d0c8",
+      "name": "Edit Fields - Normalizar mensagem",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        260,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://api:8000/classificar",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { mensagem: $json.mensagem, cliente: $json.cliente, canal: $json.canal } }}",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "id": "631b9206-179d-5a61-bd7c-e38db2fb8d91",
+      "name": "HTTP Request - Classificar com IA",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        520,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "9c3fb298-e378-5296-bfdc-b349319a3278",
+                    "leftValue": "={{ $json.setor }}",
+                    "rightValue": "suporte",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Suporte"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "8aa928f7-40d9-5cbd-ac1d-b96332a69b2d",
+                    "leftValue": "={{ $json.setor }}",
+                    "rightValue": "financeiro",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Financeiro"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "fbf924e7-0b54-52a0-9a30-8dedf2df58ed",
+                    "leftValue": "={{ $json.setor }}",
+                    "rightValue": "comercial",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Comercial"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "22807b26-ec98-549d-8b42-ac1a5f61a8b6",
+                    "leftValue": "={{ $json.setor }}",
+                    "rightValue": "logistica",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Logística"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra",
+          "renameFallbackOutput": "Atendimento"
+        }
+      },
+      "id": "77ddc6f9-e40f-5148-807c-9d81b687b38a",
+      "name": "Switch - Roteador por setor",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        780,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c5afca6c-a5a3-5212-91f1-c43b8cb8c509",
+              "name": "destino",
+              "value": "suporte@empresa-exemplo.com",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "27e8aeaf-3eab-5cf9-b305-6f9472d63779",
+      "name": "Edit Fields - Encaminhar Suporte",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1060,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e9fdbea5-3b07-5696-9438-4a1ed09316fe",
+              "name": "destino",
+              "value": "financeiro@empresa-exemplo.com",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "0dfe2130-2536-5432-92f4-61e6d8b6891c",
+      "name": "Edit Fields - Encaminhar Financeiro",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1060,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "16c72607-7064-5931-963e-3f8405e14728",
+              "name": "destino",
+              "value": "comercial@empresa-exemplo.com",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "51c690be-ef31-552f-885e-61e8881e5c03",
+      "name": "Edit Fields - Encaminhar Comercial",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1060,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c0a8541f-ca84-56fc-bceb-b171476b8004",
+              "name": "destino",
+              "value": "logistica@empresa-exemplo.com",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "936b95c0-c43e-5064-8437-c7bcfe38a2bc",
+      "name": "Edit Fields - Encaminhar Logística",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1060,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7b3c5774-f771-5e9d-897d-2b9026dae7de",
+              "name": "destino",
+              "value": "atendimento@empresa-exemplo.com",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "62c54fe3-a9a6-523e-b24a-fdebc1222afc",
+      "name": "Edit Fields - Encaminhar Atendimento",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1060,
+        640
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://api:8000/encaminhamentos",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { mensagem: $json.mensagem, cliente: $json.cliente, canal: $json.canal, tipo: $json.tipo, setor: $json.setor, prioridade: $json.prioridade, resumo: $json.resumo, destino: $json.destino } }}",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "7e7a21e3-9eb2-5b6c-a374-22ac8e9c850f",
+      "name": "HTTP Request - Registrar encaminhamento",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1340,
+        300
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Switch - Roteador por setor": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields - Encaminhar Suporte",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields - Encaminhar Financeiro",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields - Encaminhar Comercial",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields - Encaminhar Logística",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields - Encaminhar Atendimento",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields - Encaminhar Suporte": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request - Registrar encaminhamento",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields - Encaminhar Financeiro": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request - Registrar encaminhamento",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields - Encaminhar Comercial": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request - Registrar encaminhamento",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields - Encaminhar Logística": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request - Registrar encaminhamento",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields - Encaminhar Atendimento": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request - Registrar encaminhamento",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook - Recebe mensagem": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields - Normalizar mensagem",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields - Normalizar mensagem": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request - Classificar com IA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request - Classificar com IA": {
+      "main": [
+        [
+          {
+            "node": "Switch - Roteador por setor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "92f984d6-5ec4-51e0-a157-68f4216498a6",
+  "id": "eb0f6c4da83050",
+  "tags": []
+}
