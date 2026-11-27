@@ -1,0 +1,18 @@
+CODIGO;TIPO;CATEGORIA;DESCRICAO;VALOR;MES;DIA;ATIVO
+1;1;1;Salario de março;1600.0;3;5;true
+2;1;2;Freelancer - Desenvolvimento WEB;400.0;3;18;true
+3;2;1;Aluguel;500.0;3;12;true
+4;2;2;Supermercado;900.0;3;6;true
+5;2;2;Restaurante Anviersario;320.0;3;20;true
+6;2;1;Aluguel;1500.0;12;30;false
+7;2;6;Farmacia - Medicamentos;120.0;3;22;true
+8;2;4;Farmacia;50.0;2;27;true
+9;2;6;Cinema;40.0;3;25;true
+10;2;2;Jantar;100.0;3;25;true
+11;2;2;Compra do mes;900.0;3;25;true
+12;2;2;Cafe;40.0;3;27;true
+13;2;2;Alimentos;400.0;2;21;true
+14;2;4;Remedio;20.0;3;2;true
+15;2;7;Celular concerto;150.0;2;4;true
+16;2;7;Celular - Defeito;150.0;12;5;true
+17;2;6;Montar pc novo;6500.0;12;30;true

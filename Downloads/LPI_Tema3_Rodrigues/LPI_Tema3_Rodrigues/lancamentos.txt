@@ -1,0 +1,44 @@
+CODIGO;TIPO;CATEGORIA;DESCRICAO;VALOR;MES;DIA;ATIVO
+1;1;1;Salario de março;1600.0;3;5;true
+2;1;2;Freelancer - Desenvolvimento WEB;400.0;3;18;true
+3;2;1;Aluguel;500.0;3;12;true
+4;2;2;Supermercado;900.0;3;6;true
+5;2;2;Restaurante Anviersario;320.0;3;20;true
+6;2;1;Aluguel;1500.0;12;30;false
+7;2;6;Farmacia - Medicamentos;120.0;3;22;true
+8;2;4;Farmacia;50.0;2;27;true
+9;2;6;Cinema;40.0;3;25;true
+10;2;2;Jantar;100.0;3;25;true
+11;2;2;Compra do mes;900.0;3;25;true
+12;2;2;Cafe;40.0;3;27;true
+13;2;2;Alimentos;400.0;2;21;true
+14;2;4;Remedio;20.0;3;2;true
+15;2;7;Celular concerto;150.0;2;4;true
+16;2;7;Celular - Defeito;150.0;12;5;true
+17;2;6;Montar pc novo;6500.0;12;30;true
+18;1;1;Salario de janeiro;3800.0;1;5;true
+19;2;1;Aluguel janeiro;1500.0;1;10;true
+20;2;2;Supermercado janeiro;620.0;1;12;true
+21;2;3;Transporte janeiro;240.0;1;15;true
+22;1;1;Salario de fevereiro;3800.0;2;5;true
+23;2;1;Aluguel fevereiro;1500.0;2;10;true
+24;2;3;Transporte fevereiro;230.0;2;14;true
+25;2;5;Curso ingles fevereiro;290.0;2;18;true
+26;1;1;Salario de abril;4100.0;4;5;true
+27;2;1;Aluguel abril;1500.0;4;10;true
+28;2;2;Mercado abril;580.0;4;11;true
+29;2;3;Transporte abril;220.0;4;16;true
+30;2;4;Consulta medica abril;180.0;4;21;true
+31;1;2;Freela redes sociais maio;650.0;5;19;true
+32;2;2;Supermercado maio;610.0;5;8;true
+33;2;5;Curso ingles maio;290.0;5;18;true
+34;2;6;Cinema maio;45.0;5;24;false
+35;1;1;Salario de junho;4200.0;6;5;true
+36;2;2;Mercado junho;640.0;6;9;true
+37;2;7;Taxa bancaria junho;35.0;6;15;true
+38;1;3;Reembolso julho;190.0;7;12;true
+39;2;6;Show julho;210.0;7;20;true
+40;2;2;Feira agosto;140.0;8;7;true
+41;2;3;Uber cancelado;38.0;2;19;false
+42;2;6;Ingresso teatro cancelado;95.0;4;14;false
+43;1;2;Freela cancelado;300.0;6;22;false
